@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "outDir": "lib",
+        "rootDir": "src",
+        "declaration": true
+    },
+    "include": ["src"],
+    "exclude": ["test", "lib"]
+}
