@@ -5,6 +5,7 @@ export interface NodeGlobalProxyConfig {
 export declare class NodeGlobalProxy {
     config: NodeGlobalProxyConfig;
     started: boolean;
+    MAJOR_NODEJS_VERSION: number;
     constructor();
     system(): void;
     setConfig(config?: NodeGlobalProxyConfig | string): void;
@@ -12,5 +13,5 @@ export declare class NodeGlobalProxy {
     start(): void;
     stop(): void;
 }
-declare const proxy: NodeGlobalProxy;
-export default proxy;
+declare const _default: NodeGlobalProxy;
+export default _default;

@@ -1,6 +1,6 @@
 {
   "name": "@huan_kong/node-global-proxy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A global proxy for Node.JS with friendly API",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

@@ -2,16 +2,6 @@ import { bootstrap } from 'global-agent'
 import * as globalTunnel from 'global-tunnel-ng'
 import { URL } from 'url'
 
-const MAJOR_NODEJS_VERSION = parseInt(process.version.slice(1).split('.')[0], 10)
-
-if (MAJOR_NODEJS_VERSION >= 10) {
-  // `global-agent` works with Node.js v10 and above.
-  bootstrap()
-} else {
-  // `global-tunnel-ng` works only with Node.js v10 and below.
-  globalTunnel.initialize()
-}
-
 export interface NodeGlobalProxyConfig {
   http: string
   https: string
@@ -23,8 +13,19 @@ export class NodeGlobalProxy {
     https: ''
   }
   started: boolean
+  MAJOR_NODEJS_VERSION: number
 
   constructor() {
+    this.MAJOR_NODEJS_VERSION = parseInt(process.version.slice(1).split('.')[0], 10)
+
+    if (this.MAJOR_NODEJS_VERSION >= 10) {
+      // `global-agent` works with Node.js v10 and above.
+      bootstrap()
+    } else {
+      // `global-tunnel-ng` works only with Node.js v10 and below.
+      globalTunnel.initialize()
+    }
+
     this.system()
   }
 
@@ -84,7 +85,7 @@ export class NodeGlobalProxy {
 
   /** Start proxy */
   start() {
-    if (MAJOR_NODEJS_VERSION > 10) {
+    if (this.MAJOR_NODEJS_VERSION > 10) {
       ;(global as any).GLOBAL_AGENT.HTTP_PROXY = this.config.http
       ;(global as any).GLOBAL_AGENT.HTTPS_PROXY = this.config.https
     } else {
@@ -107,7 +108,7 @@ export class NodeGlobalProxy {
 
   /** Stop proxy */
   stop() {
-    if (MAJOR_NODEJS_VERSION > 10) {
+    if (this.MAJOR_NODEJS_VERSION > 10) {
       ;(global as any).GLOBAL_AGENT.HTTP_PROXY = null
       ;(global as any).GLOBAL_AGENT.HTTPS_PROXY = null
     } else {
@@ -118,5 +119,4 @@ export class NodeGlobalProxy {
   }
 }
 
-const proxy = new NodeGlobalProxy()
-export default proxy
+export default new NodeGlobalProxy()
